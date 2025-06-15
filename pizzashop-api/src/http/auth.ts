@@ -14,9 +14,9 @@ export const auth = new Elysia()
   })
   .onError(({ error, code, set }) => {
     switch (code) {
-      case 'UNAUTHORIZED': {
-        set.status = 401
-        return { code, message: error.message }
+      case "UNAUTHORIZED": {
+        set.status = 401;
+        return { code, message: error.message };
       }
     }
   })
@@ -26,7 +26,7 @@ export const auth = new Elysia()
       schema: jwtPayload,
     })
   )
-  .derive({ as: "scoped" }, ({ jwt, cookie: { auth }, }) => {
+  .derive({ as: "scoped" }, ({ jwt, cookie: { auth } }) => {
     return {
       signUser: async (payload: Static<typeof jwtPayload>) => {
         const token = await jwt.sign(payload);
@@ -40,17 +40,16 @@ export const auth = new Elysia()
         auth?.remove();
       },
       getCurrentUser: async () => {
-        console.log(auth?.value)
         const payload = await jwt.verify(auth?.value);
 
         if (!payload) {
-          throw new Error("Unauthorized.")
+          throw new Error("Unauthorized.");
         }
 
         return {
           userId: payload.sub,
-          restaurantId: payload.restaurantId
-        }
-      }
+          restaurantId: payload.restaurantId,
+        };
+      },
     };
   });
