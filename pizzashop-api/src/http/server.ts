@@ -12,6 +12,8 @@ import { cancelOrder } from "./routes/cancel-order";
 import { dispatchOrder } from "./routes/dispatch-order";
 import { deliverOrder } from "./routes/deliver-order";
 import { getOrders } from "./routes/get-orders";
+import { getMontRevenue } from "./routes/get-mount-revenue";
+import { getDayOrdersAmount } from "./routes/get-day-orders-amount";
 
 const app = new Elysia()
   .use(registerRestaurant)
@@ -27,6 +29,8 @@ const app = new Elysia()
   .use(dispatchOrder)
   .use(deliverOrder)
   .use(getOrders)
+  .use(getMontRevenue)
+  .use(getDayOrdersAmount)
   .onError(({ code, error, set }) => {
     switch (code) {
       case "UNAUTHORIZED": {
