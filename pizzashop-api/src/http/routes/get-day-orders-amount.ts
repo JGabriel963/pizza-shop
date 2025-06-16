@@ -15,7 +15,8 @@ export const getDayOrdersAmount = new Elysia()
       throw new UnauthorizedError();
     }
 
-    const today = dayjs().subtract(1, "day");
+    // TESTE TIMEZONE
+    const today = dayjs().add(dayjs().utcOffset(), "minutes");
     const yesterday = today.subtract(1, "day");
     const startOfYesterday = yesterday.startOf("day");
 
